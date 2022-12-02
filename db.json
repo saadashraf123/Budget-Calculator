@@ -1,4 +1,18 @@
 {
-    "record": [],
-    "months": []
+    "record": [
+        {
+            "id": 20,
+            "title": "www",
+            "amount": "101",
+            "month": "2022-12-23",
+            "name": "December"
+        }
+    ],
+    "months": [
+        {
+            "id": 37,
+            "name": "December",
+            "total": 101
+        }
+    ]
 }

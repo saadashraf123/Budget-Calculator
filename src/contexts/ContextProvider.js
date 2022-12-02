@@ -12,19 +12,19 @@ export const ContextProvider = ({ children }) => {
     const [showAddMonth, setShowAddMonth] = useState(false);
     const [month, setMonth] = useState("");
     const [monthName, setMonthName] = useState("");
-    const [total, setTotal] = useState(10);
+    const [total, setTotal] = useState(0);
 
 
-    useEffect(() => {
-        axios.get("https://my-json-server.typicode.com/saadashraf123/budgetCalculator-jsonserver/record")
-            .then(response => {
-                setExpense(response.data)
-            })
-        axios.get("https://my-json-server.typicode.com/saadashraf123/budgetCalculator-jsonserver/months")
-            .then(response => {
-                setMonthArr(response.data)
-            })
-    }, [total])
+    // useEffect(() => {
+    //     axios.get("http://localhost:3001/record")
+    //         .then(response => {
+    //             setExpense(response.data)
+    //         })
+    //     axios.get("http://localhost:3001/months")
+    //         .then(response => {
+    //             setMonthArr(response.data)
+    //         })
+    // }, [total])
 
     const Submitted = (e) => {
         e.preventDefault();
@@ -76,30 +76,37 @@ export const ContextProvider = ({ children }) => {
     const onAddExpense = (recentExpense) => {
         const id = Math.floor(Math.random() * 100) + 1;
         const newExpense = { id, ...recentExpense };
-        axios.post("https://my-json-server.typicode.com/saadashraf123/budgetCalculator-jsonserver/record/", newExpense)
-            .then(response => {
-                setExpense([...expense, response.data])
-            })
+        // axios.post("http://localhost:3001/record/", newExpense)
+        //     .then(response => {
+        //         setExpense([...expense, response.data])
+        //     })
+        setExpense([...expense, newExpense])
+
     };
 
     const onAddMonth = (newData) => {
         const id = Math.floor(Math.random() * 100) + 1;
         const newMonth = { id, ...newData };
-        axios.post("https://my-json-server.typicode.com/saadashraf123/budgetCalculator-jsonserver/months/", newMonth)
-            .then(response => {
-                setMonthArr([...monthArr, response.data])
-            })
+        // axios.post("http://localhost:3001/months/", newMonth)
+        //     .then(response => {
+        //         setMonthArr([...monthArr, response.data])
+        //     })
+        setMonthArr([...monthArr, newMonth])
+
     };
+
 
     const onDelete = (id) => {
         const test = expense.find((item) => {
             return item.id == id
         })
-        axios.delete("https://my-json-server.typicode.com/saadashraf123/budgetCalculator-jsonserver/record/" + id)
-            .then(response => {
-                setExpense(expense.filter((expense) => expense.id !== id));
-                calculateTotal(test, "delete");
-            })
+        // axios.delete("http://localhost:3001/record/" + id)
+        //     .then(response => {
+        //         setExpense(expense.filter((expense) => expense.id !== id));
+        //         calculateTotal(test, "delete");
+        //     })
+        setExpense(expense.filter((expense) => expense.id !== id));
+        calculateTotal(test, "delete");
     };
 
     const clickHandler = (data) => {
@@ -120,20 +127,29 @@ export const ContextProvider = ({ children }) => {
         const test = monthArr.find((item) => {
             return item.name == monthName
         })
+        const getObj = monthArr.findIndex((item) => {
+            return item.name == monthName
+        })
+        // const monthId = test.id;
 
-        const monthId = test.id;
         if (param == "add") {
             totalAmount = parseInt(test.total) + parseInt(expenseTotal)
+            const newMonthArr = [...monthArr]
+            newMonthArr[getObj].total = totalAmount
+            setMonthArr(newMonthArr)
+            setTotal(totalAmount)
         }
         else if (param == "delete") {
             totalAmount = test.total - expenseTotal
+            setTotal(totalAmount)
         }
-        axios.put("https://my-json-server.typicode.com/saadashraf123/budgetCalculator-jsonserver/months/" + monthId, {
-            ...test, total: totalAmount,
-        })
-            .then(response => {
-                setTotal(totalAmount);
-            })
+        // axios.put("http://localhost:3001/months/" + monthId, {
+        //     ...test, total: totalAmount,
+        // })
+        //     .then(response => {
+        //         setTotal(totalAmount);
+        //     })
+
 
     }
 
