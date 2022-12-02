@@ -7,7 +7,7 @@ const AddExpense = () => {
         <form className="add-form" onSubmit={Submitted}>
             <h3>Add New Expense</h3>
             <div className="form-control">
-                <label>Expense</label>
+                <label>Expense: </label>
                 <input
                     type="text"
                     placeholder="Add an Expense"
@@ -16,7 +16,7 @@ const AddExpense = () => {
                 />
             </div>
             <div className="form-control">
-                <label>Amount</label>
+                <label>Amount: </label>
                 <input
                     type="number"
                     placeholder="Add an Amount"
@@ -25,10 +25,10 @@ const AddExpense = () => {
                 />
             </div>
             <div className="form-control">
-                <label>Month</label>
+                <label>Date: </label>
                 <input
                     type="date"
-                    placeholder="Add a Month"
+                    placeholder="Add a Date"
                     value={month}
                     onChange={(e) => setMonth(e.target.value)}
                 />

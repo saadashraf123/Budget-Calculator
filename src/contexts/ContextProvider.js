@@ -140,7 +140,10 @@ export const ContextProvider = ({ children }) => {
             setTotal(totalAmount)
         }
         else if (param == "delete") {
-            totalAmount = test.total - expenseTotal
+            totalAmount = parseInt(test.total) - parseInt(expenseTotal)
+            const newMonthArr = [...monthArr]
+            newMonthArr[getObj].total = totalAmount
+            setMonthArr(newMonthArr)
             setTotal(totalAmount)
         }
         // axios.put("http://localhost:3001/months/" + monthId, {
